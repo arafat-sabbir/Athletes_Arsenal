@@ -1,11 +1,9 @@
-import "./App.css";
-import { Button } from "./components/ui/button";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
     <>
-      <h6 className="text-5xl font-semibold">Hello</h6>
-      <Button variant={"destructive"}>Click Me</Button>
+      <Navbar />
     </>
   );
 }
