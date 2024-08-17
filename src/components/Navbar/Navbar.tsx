@@ -4,6 +4,7 @@ import { CircleAlert, House, Moon, Package, Sun } from "lucide-react";
 import Container from "@/layout/Container/Container";
 import { useTheme } from "../theme-provider";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -49,7 +50,7 @@ const Navbar = () => {
               <span className="sr-only">Toggle theme</span>
             </Button>
             <Button className="lg:block hidden dark:text-white">
-              <a href="#contact">Contact Us</a>
+              <Link to={"/login"}>Login</Link>
             </Button>
           </div>
           <div className="lg:hidden block ">
