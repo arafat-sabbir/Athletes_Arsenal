@@ -56,10 +56,7 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={placeholder}
               {...field}
-              className={cn(
-                "border-0 focus:ring-0 focus:outline-none",
-                className
-              )}
+              className={cn("focus:ring-0 focus:outline-none", className)}
             />
           </FormControl>
         </div>

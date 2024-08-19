@@ -10,6 +10,7 @@ import { LoginFormValidation } from "@/lib/validation";
 import Container from "@/layout/Container/Container";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
+import BackToHome from "../BackToHome";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -30,10 +31,10 @@ const LoginForm = ({ className }: { className?: string }) => {
     console.log(values);
   };
   return (
-    <Container className="flex justify-center items-center h-screen">
-      <div className="mx-auto w-full max-w-md space-y-4 rounded-lg border bg-white p-7 shadow-lg sm:p-10 dark:border-zinc-700 dark:bg-zinc-900">
-        <h1 className="text-3xl font-semibold text-center">Hey There👋</h1>
-        <h1 className="text-xl font-semibold text-center">Welcome Back</h1>
+    <Container className="flex justify-center items-center h-screen relative">
+      <BackToHome />
+      <div className="mx-auto w-full max-w-xl space-y-6 rounded-lg border bg-white p-10 shadow-lg sm:p-20 dark:border-zinc-700 dark:bg-zinc-900">
+        <h1 className="text-3xl font-medium text-center mb-10">Welcome Back</h1>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -41,7 +42,7 @@ const LoginForm = ({ className }: { className?: string }) => {
           >
             <CustomFormField
               control={form.control}
-              className="placeholder:text-lg"
+              className="placeholder:text-lg rounded-none border"
               fieldType={FormFieldType.INPUT}
               name="email"
               placeholder="Enter Your Email"
@@ -49,7 +50,7 @@ const LoginForm = ({ className }: { className?: string }) => {
             />
             <CustomFormField
               control={form.control}
-              className="placeholder:text-lg"
+              className="placeholder:text-lg rounded-none"
               fieldType={FormFieldType.INPUT}
               name="password"
               placeholder="Enter Your Password"
@@ -59,13 +60,13 @@ const LoginForm = ({ className }: { className?: string }) => {
               Login
             </Button>
           </form>
+        </Form>
           <p className="text-center text-sm text-zinc-700 dark:text-zinc-300">
             Don&apos;t have an account?
             <Link to="/register" className="font-semibold underline">
-              Register
+              Sign Up
             </Link>
           </p>
-        </Form>
       </div>
     </Container>
   );

@@ -4,7 +4,7 @@ import { CircleAlert, House, Moon, Package, Sun } from "lucide-react";
 import Container from "@/layout/Container/Container";
 import { useTheme } from "../theme-provider";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -21,20 +21,27 @@ const Navbar = () => {
       <Container>
         <div className="h-20 items-center px-5 lg:px-0 flex justify-between">
           <div>
-            <h1 className="text-xl font-semibold">Athlete's Arsenal</h1>
+            <h1 className="text-xl  font-zen flex items-center gap-1">
+              <img src="/assets/logo/logo.png" className="h-14 w-14" alt="" /> Athlete's Arsenal
+              </h1>
           </div>
 
           <ul className="lg:flex hidden gap-6">
-            <a className={"text-primary font-bold  rounded-full"}>Home</a>
-            <a className="hover:text-primary  cursor-pointer transition-all duration-300">
+            <NavLink to={"/"} className={"rounded-full"}>
+              Home
+            </NavLink>
+            <NavLink
+              to={"/about"}
+              className="hover:text-primary   cursor-pointer transition-all duration-300"
+            >
               About Us
-            </a>
-            <a
-              href="#ourProjects"
-              className="hover:text-primary  cursor-pointer transition-all duration-300"
+            </NavLink>
+            <NavLink
+              to="ourProjects"
+              className="hover:text-primary   cursor-pointer transition-all duration-300"
             >
               Our Projects
-            </a>
+            </NavLink>
           </ul>
           <div className="flex md:gap-6 gap-2">
             <Button
@@ -98,16 +105,15 @@ const Navbar = () => {
             </svg>
           </div>
           <ul className="w-full p-4">
-            <a className="flex gap-2  p-2">
+            <NavLink to={"/"} className="flex gap-2  p-2">
               <House /> Home
-            </a>
-            <a href="#contact" className="flex gap-2  p-2">
+            </NavLink>
+            <NavLink to="contact" className="flex gap-2  p-2">
               <CircleAlert /> Contact Us
-            </a>
-            <a href="#ourProjects" className="flex gap-2  p-2">
-              {" "}
+            </NavLink>
+            <NavLink to="ourProjects" className="flex gap-2  p-2">
               <Package /> Our Projects
-            </a>
+            </NavLink>
           </ul>
         </div>
       </Container>
