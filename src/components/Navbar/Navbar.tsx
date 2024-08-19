@@ -17,13 +17,14 @@ const Navbar = () => {
   //   };
 
   return (
-    <nav className=" border-b text-black w-full relative  dark:text-white ">
+    <nav className=" border-b fixed text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>
         <div className="h-20 items-center px-5 lg:px-0 flex justify-between">
           <div>
             <h1 className="text-xl  font-zen flex items-center gap-1">
-              <img src="/assets/logo/logo.png" className="h-14 w-14" alt="" /> Athlete's Arsenal
-              </h1>
+              <img src="/assets/logo/logo.png" className="h-14 w-14" alt="" />{" "}
+              Athlete's Arsenal
+            </h1>
           </div>
 
           <ul className="lg:flex hidden gap-6">
@@ -56,9 +57,9 @@ const Navbar = () => {
               )}
               <span className="sr-only">Toggle theme</span>
             </Button>
-            <Button className="lg:block hidden dark:text-white">
-              <Link to={"/login"}>Login</Link>
-            </Button>
+            <Link to={"/login"}>
+              <Button className="lg:block hidden dark:text-white">Login</Button>
+            </Link>
           </div>
           <div className="lg:hidden block ">
             {!open && (

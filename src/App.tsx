@@ -1,3 +1,4 @@
+import AboutUs from "./components/Home/AboutUs";
 import Banner from "./components/Home/Banner";
 import NewArrival from "./components/Home/NewArrival";
 import OurTraining from "./components/Home/OurTraining";
@@ -11,6 +12,7 @@ function App() {
       <Banner />
       <OurTraining />
       <NewArrival />
+      <AboutUs />
       <ScrollToTop />
     </>
   );
