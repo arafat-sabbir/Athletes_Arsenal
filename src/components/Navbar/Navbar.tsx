@@ -17,7 +17,7 @@ const Navbar = () => {
   //   };
 
   return (
-    <nav className=" border-b fixed text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
+    <nav className=" border-b sticky text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>
         <div className="h-20 items-center px-5 lg:px-0 flex justify-between">
           <div>
