@@ -6,7 +6,7 @@ const AboutUs = () => {
     <section className="bg-[#292828] px-40 py-10 text-white dark:bg-[#2928285d]">
       <div className="flex gap-20">
         <div>
-          <img src={"/assets/background/about.png"} alt="" />
+          <img src={"/assets/Background/about.png"} alt="" />
         </div>
         <div className="space-y-4">
           <h1 className="text-3xl font-medium tracking-wider">

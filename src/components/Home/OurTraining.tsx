@@ -3,12 +3,12 @@ import TrainingCard from "../TrainingCard";
 
 const OurTraining = () => {
   const items = [
-    { title: "Rope Workout", image: "/assets/background/1.png" },
-    { title: "Rope Workout", image: "/assets/background/2.png" },
-    { title: "Rope Workout", image: "/assets/background/3.png" },
-    { title: "Rope Workout", image: "/assets/background/4.png" },
-    { title: "Rope Workout", image: "/assets/background/5.png" },
-    { title: "Rope Workout", image: "/assets/background/6.png" },
+    { title: "Rope Workout", image: "/assets/Background/1.png" },
+    { title: "Rope Workout", image: "/assets/Background/2.png" },
+    { title: "Rope Workout", image: "/assets/Background/3.png" },
+    { title: "Rope Workout", image: "/assets/Background/4.png" },
+    { title: "Rope Workout", image: "/assets/Background/5.png" },
+    { title: "Rope Workout", image: "/assets/Background/6.png" },
   ];
   return (
     <Container className="py-20">

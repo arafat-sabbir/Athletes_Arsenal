@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { CircleAlert, House, Moon, Package, Sun } from "lucide-react";
 import Container from "@/layout/Container/Container";
