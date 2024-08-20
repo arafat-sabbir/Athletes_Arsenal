@@ -10,10 +10,9 @@ import { Toaster } from "sonner";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={routes}>
-        <App />
-      </RouterProvider>
+      <RouterProvider router={routes} />
+      <App />
     </ThemeProvider>
-        <Toaster richColors/>
+    <Toaster richColors />
   </StrictMode>
 );
