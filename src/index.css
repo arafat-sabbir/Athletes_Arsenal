@@ -83,6 +83,7 @@
 }
 
 .active {
-  font-weight: 900;
+  font-weight: 700;
+  letter-spacing: 0.035em;
   color: hsl(var(--primary));
 }

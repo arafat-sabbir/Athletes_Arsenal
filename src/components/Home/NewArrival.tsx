@@ -1,5 +1,7 @@
 import Container from "@/layout/Container/Container";
 import ProductCard from "../ProductCard";
+import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const NewArrival = () => {
   const items = [
@@ -56,7 +58,7 @@ const NewArrival = () => {
     <Container className="pb-20">
       <div className="space-y-2">
         <h3 className="text-2xl font-medium text-primary text-center">
-          NEW ARRIVALS
+          Featured Products
         </h3>
         <h1 className="text-4xl font-medium text-center tracking-wider ">
           Top Brand Products
@@ -71,6 +73,7 @@ const NewArrival = () => {
           <ProductCard item={item} key={index}></ProductCard>
         ))}
       </div>
+        <Link to={"/products"}><Button size={"xxl"} className="mx-auto flex">Explore More</Button></Link>
     </Container>
   );
 };
