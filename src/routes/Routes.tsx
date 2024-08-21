@@ -1,6 +1,5 @@
 import App from "@/App";
 import MainLayout from "@/layout/MainLayout";
-import AddProduct from "@/pages/AddProduct/AddProduct";
 import Login from "@/pages/login/Login";
 import Products from "@/pages/Products/Products";
 import Register from "@/pages/Register/Register";
