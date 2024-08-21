@@ -1,4 +1,4 @@
-"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -9,8 +9,9 @@ import CustomFormField from "../CustomFormField";
 import { LoginFormValidation } from "@/lib/validation";
 import Container from "@/layout/Container/Container";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BackToHome from "../BackToHome";
+import useAxiosPublic from "@/hooks/AxiosPublic";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -19,6 +20,9 @@ export enum FormFieldType {
   SELECT = "select",
 }
 const LoginForm = ({ className }: { className?: string }) => {
+  const axios = useAxiosPublic();
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof LoginFormValidation>>({
     resolver: zodResolver(LoginFormValidation),
     defaultValues: {
@@ -27,8 +31,17 @@ const LoginForm = ({ className }: { className?: string }) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof LoginFormValidation>) => {
-    toast.success("Login Successful");
-    console.log(values);
+    try {
+      const result = await axios.post("/user/login", values);
+      toast.success("Login Successful");
+      console.log(result);
+      localStorage.setItem("token", result.data.data.accessToken);
+      console.log(result.data);
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+      console.log(error.response.data.message);
+    }
   };
   return (
     <Container className="flex justify-center items-center h-screen relative">
@@ -42,7 +55,7 @@ const LoginForm = ({ className }: { className?: string }) => {
           >
             <CustomFormField
               control={form.control}
-              className="placeholder:text-lg rounded-none border"
+              className=" rounded-none border"
               fieldType={FormFieldType.INPUT}
               name="email"
               placeholder="Enter Your Email"
@@ -50,7 +63,7 @@ const LoginForm = ({ className }: { className?: string }) => {
             />
             <CustomFormField
               control={form.control}
-              className="placeholder:text-lg rounded-none"
+              className=" rounded-none"
               fieldType={FormFieldType.INPUT}
               name="password"
               placeholder="Enter Your Password"
@@ -61,12 +74,12 @@ const LoginForm = ({ className }: { className?: string }) => {
             </Button>
           </form>
         </Form>
-          <p className="text-center text-sm text-zinc-700 dark:text-zinc-300">
-            Don&apos;t have an account?
-            <Link to="/register" className="font-semibold underline">
-              Sign Up
-            </Link>
-          </p>
+        <p className="text-center text-sm text-zinc-700 dark:text-zinc-300">
+          Don&apos;t have an account?
+          <Link to="/register" className="font-semibold underline">
+            Sign Up
+          </Link>
+        </p>
       </div>
     </Container>
   );

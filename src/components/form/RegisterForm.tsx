@@ -1,4 +1,4 @@
-"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -6,11 +6,12 @@ import { Form } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import CustomFormField from "../CustomFormField";
-import { LoginFormValidation } from "@/lib/validation";
+import { RegisterFormValidation } from "@/lib/validation";
 import Container from "@/layout/Container/Container";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BackToHome from "../BackToHome";
+import useAxiosPublic from "@/hooks/AxiosPublic";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -19,16 +20,25 @@ export enum FormFieldType {
   SELECT = "select",
 }
 const RegisterForm = ({ className }: { className?: string }) => {
-  const form = useForm<z.infer<typeof LoginFormValidation>>({
-    resolver: zodResolver(LoginFormValidation),
+  const navigate = useNavigate();
+  const axios = useAxiosPublic();
+  const form = useForm<z.infer<typeof RegisterFormValidation>>({
+    resolver: zodResolver(RegisterFormValidation),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof LoginFormValidation>) => {
-    toast.success("Login Successful");
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof RegisterFormValidation>) => {
+    try {
+      const response = await axios.post("/user/register", values);
+      toast.success("Register Successful");
+      console.log(response);
+      navigate("/login");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <Container className="flex justify-center items-center h-screen relative">
@@ -42,31 +52,40 @@ const RegisterForm = ({ className }: { className?: string }) => {
           >
             <CustomFormField
               control={form.control}
-              className="placeholder:text-lg rounded-none"
+              className=" rounded-none"
               fieldType={FormFieldType.INPUT}
-              name="email"
-              placeholder="Enter Your Email"
+              name="name"
+              placeholder="Enter Your Name"
               iconAlt="user"
             />
             <CustomFormField
               control={form.control}
-              className="placeholder:text-lg rounded-none"
+              className=" rounded-none"
+              fieldType={FormFieldType.INPUT}
+              name="email"
+              placeholder="Enter Your Email"
+              iconAlt="email"
+            />
+
+            <CustomFormField
+              control={form.control}
+              className=" rounded-none"
               fieldType={FormFieldType.INPUT}
               name="password"
               placeholder="Enter Your Password"
-              iconAlt="user"
+              iconAlt="password"
             />
             <Button className="mt-4 bg-primary mx-auto lg:mx-0 w-full">
               Login
             </Button>
           </form>
         </Form>
-          <p className="text-center text-sm text-zinc-700 dark:text-zinc-300">
-            Don&apos;t have an account?
-            <Link to="/login" className="font-semibold underline">
-              Sign In
-            </Link>
-          </p>
+        <p className="text-center text-sm text-zinc-700 dark:text-zinc-300">
+          Don&apos;t have an account?
+          <Link to="/login" className="font-semibold underline">
+            Sign In
+          </Link>
+        </p>
       </div>
     </Container>
   );
