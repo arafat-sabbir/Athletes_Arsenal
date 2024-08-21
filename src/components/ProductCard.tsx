@@ -1,11 +1,6 @@
-type item = {
-  title: string;
-  price: number;
-  vendor: string;
-  thumbnail: string;
-};
+import { TProduct } from "@/pages/Products/Products";
 
-const ProductCard = ({ item }: { item: item }) => {
+const ProductCard = ({ item }: { item: TProduct }) => {
   const { title, price, vendor, thumbnail } = item;
   return (
     <div className="max-w-[332px] max-h-[478x] space-y-2 overflow-hidden">
