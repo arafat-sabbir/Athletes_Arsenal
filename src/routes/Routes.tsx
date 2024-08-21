@@ -1,5 +1,6 @@
 import App from "@/App";
 import MainLayout from "@/layout/MainLayout";
+import AddProduct from "@/pages/AddProduct/AddProduct";
 import Login from "@/pages/login/Login";
 import Products from "@/pages/Products/Products";
 import Register from "@/pages/Register/Register";
@@ -15,9 +16,13 @@ export const routes = createBrowserRouter([
         element: <App />,
       },
       {
-        path:"products",
-        element: <Products />
-      }
+        path: "products",
+        element: <Products />,
+      },
+      // {
+      //   path: "/add-product",
+      //   element: <AddProduct />,
+      // },
     ],
   },
   {

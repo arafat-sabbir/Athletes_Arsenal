@@ -12,6 +12,9 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import BackToHome from "../BackToHome";
 import useAxiosPublic from "@/hooks/AxiosPublic";
+import { useAppDispatch } from "@/redux/features/hooks";
+import { decodeToken } from "@/utils/decodeToken";
+import { setUser, TUser } from "@/redux/features/auth/authSlice";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -21,6 +24,7 @@ export enum FormFieldType {
 }
 const LoginForm = ({ className }: { className?: string }) => {
   const axios = useAxiosPublic();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof LoginFormValidation>>({
@@ -34,9 +38,8 @@ const LoginForm = ({ className }: { className?: string }) => {
     try {
       const result = await axios.post("/user/login", values);
       toast.success("Login Successful");
-      console.log(result);
-      localStorage.setItem("token", result.data.data.accessToken);
-      console.log(result.data);
+      const user = decodeToken(result.data.data.accessToken) as TUser;
+      dispatch(setUser({ user, token: result.data.data.accessToken }));
       navigate("/");
     } catch (error: any) {
       toast.error(error.response.data.message);

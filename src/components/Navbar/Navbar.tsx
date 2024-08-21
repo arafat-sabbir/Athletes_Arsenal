@@ -4,23 +4,27 @@ import Container from "@/layout/Container/Container";
 import { useTheme } from "../theme-provider";
 import { Button } from "../ui/button";
 import { Link, NavLink } from "react-router-dom";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/features/hooks";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const user = useAppSelector(selectCurrentUser);
   const toggleNavbar = () => {
     setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
-  //   const toggleTheme = () => {
-  //     setTheme(theme === "light" ? "dark" : "light");
-  //   };
+  console.log(user, "From navbar");
 
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>
         <div className="h-20 items-center px-5 lg:px-0 flex justify-between">
           <div>
-            <Link to={"/"} className="text-xl  font-zen flex items-center gap-1">
+            <Link
+              to={"/"}
+              className="text-xl  font-zen flex items-center gap-1"
+            >
               <img src="/assets/logo/logo.png" className="h-14 w-14" alt="" />{" "}
               Athlete's Arsenal
             </Link>
@@ -43,7 +47,7 @@ const Navbar = () => {
               Our Products
             </NavLink>
           </ul>
-          <div className="flex md:gap-6 gap-2">
+          <div className="flex md:gap-6 gap-2 items-center">
             <Button
               variant="outline"
               size="icon"
@@ -56,9 +60,15 @@ const Navbar = () => {
               )}
               <span className="sr-only">Toggle theme</span>
             </Button>
-            <Link to={"/login"}>
-              <Button className="lg:block hidden dark:text-white">Login</Button>
-            </Link>
+            {!user ? (
+              <Link to={"/login"}>
+                <Button className="lg:block hidden dark:text-white">
+                  Login
+                </Button>
+              </Link>
+            ) : (
+              <p>{user.name}</p>
+            )}
           </div>
           <div className="lg:hidden block ">
             {!open && (

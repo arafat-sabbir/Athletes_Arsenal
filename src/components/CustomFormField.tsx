@@ -23,6 +23,7 @@ interface CustomProps {
   fieldType: FormFieldType;
   defaultValue?: string;
   name: string;
+  type?: string;
   onChange?: (e: any) => void;
   label?: string;
   placeholder: string;
@@ -31,6 +32,8 @@ interface CustomProps {
   dateFormat?: string;
   showTimeSelect?: boolean;
   children?: ReactNode;
+  accept?: string;
+  multiple?: boolean;
   iconAlt?: string;
   className?: string;
   renderSkeleton?: (filed: any) => ReactNode;
@@ -56,6 +59,9 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={placeholder}
               {...field}
+              type={props?.type}
+              accept={props?.accept}
+              multiple={props?.multiple}
               className={cn("focus:ring-0 focus:outline-none", className)}
             />
           </FormControl>
