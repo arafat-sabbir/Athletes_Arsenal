@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const ProductCard = ({ item }: { item: TProduct }) => {
   const { title, price, vendor, thumbnail } = item;
   return (
-    <div className="max-w-[332px] max-h-[48x] space-y-2 overflow-hidden ">
+    <div className="max-w-[332px]  space-y-2 overflow-hidden">
       <img
         src={thumbnail}
         alt={title}
