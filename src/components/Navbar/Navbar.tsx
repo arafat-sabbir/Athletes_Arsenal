@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 import { Link, NavLink } from "react-router-dom";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/features/hooks";
+import useFetchData from "@/hooks/FetchData";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -21,7 +22,10 @@ const Navbar = () => {
     setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
-
+ const {
+    data: cartProduct,
+    isLoading,
+  } = useFetchData("/cart/get-my-cart");
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>
@@ -54,10 +58,12 @@ const Navbar = () => {
             </NavLink>
           </ul>
           <div className="flex md:gap-6 gap-2 items-center">
-          <div className="relative">
-          <ShoppingCart />
-          <h1 className="absolute -top-4 right-0 text-primary">{1}</h1>
-          </div>
+            <div className="relative">
+              <ShoppingCart />
+              <h1 className="absolute -top-4 right-0 text-primary">
+                {isLoading ? 0 : cartProduct?.length}
+              </h1>
+            </div>
             <Button
               variant="outline"
               size="icon"

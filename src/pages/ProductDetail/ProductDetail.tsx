@@ -27,7 +27,6 @@ const ProductDetail = () => {
     product: product?._id,
     quantity: 2,
   });
-
   return (
     <Container className="py-10">
       <div className="flex justify-center gap-10 lg:flex-row flex-col">
