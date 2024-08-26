@@ -18,7 +18,7 @@ const ProductCard = ({ item }: { item: TProduct }) => {
         <h1 className="text-wrap w-9/12">{title}</h1>
         <p className="text-primary">${price}</p>
       </div>
-      <Link to={`/product/${item._id}`} className="w-full">
+      <Link to={`/product/${item._id}`} state={item} className="w-full">
         <Button  className="w-full">
           View Details
         </Button>

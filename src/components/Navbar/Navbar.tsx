@@ -14,7 +14,6 @@ const Navbar = () => {
     setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
-  console.log(user, "From navbar");
 
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
@@ -67,7 +66,7 @@ const Navbar = () => {
                 </Button>
               </Link>
             ) : (
-              <p>{user.name}</p>
+              <p>{user?.name||"lkadjf"}</p>
             )}
           </div>
           <div className="lg:hidden block ">

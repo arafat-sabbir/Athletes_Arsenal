@@ -14,6 +14,7 @@ export type TProduct = {
   category: string;
   stockCount: number;
   vendor: string;
+  productImages:string[];
 };
 
 const Products = () => {
@@ -36,7 +37,7 @@ const Products = () => {
   if (isLoading) {
     return (
       <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-hidden 2xl:grid-cols-4 gap-10 py-10 justify-center items-center justify-items-center">
-        {[1, 2, 3, 4]?.map((i) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8]?.map((i) => (
           <ProductCardSkeleton key={i} />
         ))}
       </Container>
