@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { CircleAlert, House, Moon, Package, Sun } from "lucide-react";
+import {
+  CircleAlert,
+  House,
+  Moon,
+  Package,
+  ShoppingCart,
+  Sun,
+} from "lucide-react";
 import Container from "@/layout/Container/Container";
 import { useTheme } from "../theme-provider";
 import { Button } from "../ui/button";
@@ -47,6 +54,10 @@ const Navbar = () => {
             </NavLink>
           </ul>
           <div className="flex md:gap-6 gap-2 items-center">
+          <div className="relative">
+          <ShoppingCart />
+          <h1 className="absolute -top-4 right-0 text-primary">{1}</h1>
+          </div>
             <Button
               variant="outline"
               size="icon"
@@ -66,7 +77,7 @@ const Navbar = () => {
                 </Button>
               </Link>
             ) : (
-              <p>{user?.name||"lkadjf"}</p>
+              <p>{user?.name || "lkadjf"}</p>
             )}
           </div>
           <div className="lg:hidden block ">
