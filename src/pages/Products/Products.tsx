@@ -93,7 +93,7 @@ const Products = () => {
         />
         <Select onValueChange={(value) => setSort(value)}>
           <SelectTrigger
-            className="w-[250px] bg-white outline-none "
+            className="w-[250px] bg-white dark:bg-black outline-none "
             onChange={(e) => console.log(e)}
           >
             <SelectValue placeholder="Sort By" />
@@ -104,8 +104,8 @@ const Products = () => {
               <SelectItem value="asc">Low To High</SelectItem>
             </SelectGroup>
           </SelectContent>
-        </Select>
-        <button type="submit" className=" bg-white px-6 ">
+        </Select> 
+        <button type="submit" className=" bg-white dark:bg-black px-6 ">
           <Search />
         </button>
       <button className="bg-red-500/90 text-white px-6 rounded-full rounded-l-none" type="button" onClick={resetQuery}>Reset</button>
