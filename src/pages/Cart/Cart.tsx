@@ -1,6 +1,5 @@
 import useFetchData from "@/hooks/FetchData";
 import Container from "@/layout/Container/Container";
-import { TProduct } from "../Products/Products";
 import ProductCard from "@/components/ProductCard";
 
 const Cart = () => {
