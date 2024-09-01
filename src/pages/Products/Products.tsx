@@ -2,6 +2,14 @@ import ProductCard from "@/components/ProductCard";
 import ProductCardSkeleton from "@/components/skeletonLoader/ProductCardSkeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import useProducts from "@/hooks/getProducts";
 import Container from "@/layout/Container/Container";
 import { Search } from "lucide-react";
@@ -22,19 +30,23 @@ export type TProduct = {
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [sort, setSort] = useState("asc");
   const [pageSize] = useState(10);
   const categories = ["cardio", "strength", "yoga", "accessories", "recovery"];
   const [searchTerm, setSearchTerm] = useState("");
-  const query= {
+  const query = {
     searchTerm,
     page: currentPage,
     categories: selectedCategories,
+    sort,
   };
   const { data, isLoading, isError } = useProducts(query);
   const totalPages = Math.ceil(data?.totalProduct / pageSize);
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchTerm((e.currentTarget.elements.namedItem('title') as HTMLInputElement).value);
+    setSearchTerm(
+      (e.currentTarget.elements.namedItem("title") as HTMLInputElement).value
+    );
   };
   const handleCategoryClick = (category: string) => {
     setSelectedCategories((prevCategories) =>
@@ -61,9 +73,13 @@ const Products = () => {
       <div className="text-center text-red-500">Error loading products</div>
     );
   }
-
+  const resetQuery = () => {
+    setSelectedCategories(["all"]);
+    setSearchTerm("");
+    setSort("asc");
+  };
   return (
-    <Container className=" py-10">
+    <Container className=" py-10 min-h-[65vh]">
       {/* Category Filters */}
       <form
         onSubmit={handleSearch}
@@ -75,9 +91,24 @@ const Products = () => {
           name="title"
           className="rounded-full border-0 "
         />
-        <button className=" bg-white px-6 rounded-full">
+        <Select onValueChange={(value) => setSort(value)}>
+          <SelectTrigger
+            className="w-[250px] bg-white outline-none "
+            onChange={(e) => console.log(e)}
+          >
+            <SelectValue placeholder="Sort By" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="desc">High To Low</SelectItem>
+              <SelectItem value="asc">Low To High</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <button type="submit" className=" bg-white px-6 ">
           <Search />
         </button>
+      <button className="bg-red-500/90 text-white px-6 rounded-full rounded-l-none" type="button" onClick={resetQuery}>Reset</button>
       </form>
       <div className="flex flex-wrap justify-center gap-4 mb-8">
         {categories.map((name) => (

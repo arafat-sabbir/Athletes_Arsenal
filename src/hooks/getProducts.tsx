@@ -1,18 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./AxiosPublic";
-type TQuery = { searchTerm?: string; page?: number; categories?: string[] };
+type TQuery = {
+  searchTerm?: string;
+  page?: number;
+  categories?: string[];
+  sort: string;
+};
 
 const useProducts = (query?: TQuery) => {
   const axiosPublic = useAxiosPublic();
-  
+
   // Create a unique key that differentiates when query parameters are not passed
-  const queryKey = ["getProducts", query?.page || 1, query?.categories?.join(",") || "all", query?.searchTerm || ""];
+  const queryKey = [
+    "getProducts",
+    query?.page || 1,
+    query?.categories?.join(",") || "all",
+    query?.searchTerm || "",
+    query?.sort || "desc",
+  ];
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey,
     queryFn: async () => {
       const res = await axiosPublic.get(
-        `/product/products?page=${query?.page || 1}&categories=${query?.categories?.join(",") || "all"}&searchTerm=${query?.searchTerm || ""}`
+        `/product/products?page=${query?.page || 1}&categories=${
+          query?.categories?.join(",") || "all"
+        }&searchTerm=${query?.searchTerm || ""}&sort=${query?.sort || "desc"}`
       );
       return res.data.data;
     },
