@@ -22,7 +22,12 @@ const ProductDetail = () => {
     );
     return () => clearInterval(intervalId);
   }, [currentSlider, product?.productImages?.length]);
-
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   const { mutate, isPending } = useMutateData("/cart/add-to-cart", {
     product: product?._id,
     quantity: 2,
