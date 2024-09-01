@@ -1,9 +1,11 @@
 import ProductCard from "@/components/ProductCard";
 import ProductCardSkeleton from "@/components/skeletonLoader/ProductCardSkeleton";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import useProducts from "@/hooks/getProducts";
 import Container from "@/layout/Container/Container";
-import { useState } from "react";
+import { Search } from "lucide-react";
+import { FormEvent, useState } from "react";
 
 export type TProduct = {
   _id: string;
@@ -20,14 +22,20 @@ export type TProduct = {
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const { data, isLoading, isError } = useProducts(
-    currentPage,
-    selectedCategories
-  );
   const [pageSize] = useState(10);
-  const totalPages = Math.ceil(data?.totalProduct / pageSize);
   const categories = ["cardio", "strength", "yoga", "accessories", "recovery"];
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const query= {
+    searchTerm,
+    page: currentPage,
+    categories: selectedCategories,
+  };
+  const { data, isLoading, isError } = useProducts(query);
+  const totalPages = Math.ceil(data?.totalProduct / pageSize);
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchTerm((e.currentTarget.elements.namedItem('title') as HTMLInputElement).value);
+  };
   const handleCategoryClick = (category: string) => {
     setSelectedCategories((prevCategories) =>
       prevCategories.includes(category)
@@ -57,11 +65,25 @@ const Products = () => {
   return (
     <Container className=" py-10">
       {/* Category Filters */}
+      <form
+        onSubmit={handleSearch}
+        className="flex  border-2 border-gray-300 rounded-full pl-2 mb-6 w-2/3 mx-auto"
+      >
+        <Input
+          type="text"
+          placeholder="Search"
+          name="title"
+          className="rounded-full border-0 "
+        />
+        <button className=" bg-white px-6 rounded-full">
+          <Search />
+        </button>
+      </form>
       <div className="flex flex-wrap justify-center gap-4 mb-8">
         {categories.map((name) => (
           <div
             key={name}
-            className={`py-2 px-4 rounded-full cursor-pointer transition duration-300 ${
+            className={`py-1 px-4 rounded-full cursor-pointer transition duration-300 ${
               selectedCategories.includes(name)
                 ? "bg-red-500 text-white"
                 : "bg-gray-300/60 text-gray-700 hover:bg-gray-300"

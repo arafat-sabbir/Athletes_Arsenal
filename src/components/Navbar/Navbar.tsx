@@ -19,13 +19,13 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const user = useAppSelector(selectCurrentUser);
   const toggleNavbar = () => {
-     setOpen(!open);
+    setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
- const {
-    data: cartProduct,
-    isLoading,
-  } = useFetchData("/cart/get-my-cart",!!user);
+  const { data: cartProduct, isLoading } = useFetchData(
+    "/cart/get-my-cart",
+    true
+  );
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>

@@ -1,25 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./AxiosPublic";
+type TQuery = { searchTerm?: string; page?: number; categories?: string[] };
 
-const useProducts = (page: number=0,categories?: string[]) => {
-  const categoryQuery = categories?.length
-  ? `&categories=${categories.join(",")}`
-  : "";
+const useProducts = (query?: TQuery) => {
   const axiosPublic = useAxiosPublic();
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["getProducts", page,categoryQuery],
+  
+  // Create a unique key that differentiates when query parameters are not passed
+  const queryKey = ["getProducts", query?.page || 1, query?.categories?.join(",") || "all", query?.searchTerm || ""];
+
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey,
     queryFn: async () => {
-      const res = await axiosPublic.get(`/product/products?page=${page}${categoryQuery}`);
-      return res.data.data;  // Adjusted to return the whole data structure
+      const res = await axiosPublic.get(
+        `/product/products?page=${query?.page || 1}&categories=${query?.categories?.join(",") || "all"}&searchTerm=${query?.searchTerm || ""}`
+      );
+      return res.data.data;
     },
+    // Optionally add a query on query key change
+    staleTime: 0, // Set to 0 if you want fresh data on every query
   });
+
   return { data, refetch, isLoading, isError };
 };
 
 export default useProducts;
-
