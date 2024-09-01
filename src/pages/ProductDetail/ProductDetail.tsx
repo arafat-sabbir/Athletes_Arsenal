@@ -77,15 +77,15 @@ const ProductDetail = () => {
             })}
           </div>
         </div>
-        <div className="flex-1 space-y-6 p-6 bg-white rounded-lg shadow-md">
-          <h1 className="text-3xl font-semibold text-gray-800">
+        <div className="flex-1 space-y-6 p-6 bg-white dark:bg-[#1B1B1B] rounded-lg shadow-md">
+          <h1 className="text-3xl font-semibold text-title-dark">
             {product?.title}
           </h1>
-          <p className="text-xl font-bold text-gray-900">৳{product?.price}</p>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-xl font-bold text-title-dark">৳{product?.price}</p>
+          <p className="text-title-dark leading-relaxed">
             {product?.description}
           </p>
-          <p className="text-md font-medium text-gray-600">
+          <p className="text-md font-medium text-title-dark">
             Vendor: {product?.vendor}
           </p>
           <Button

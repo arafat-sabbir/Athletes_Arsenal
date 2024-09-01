@@ -18,10 +18,6 @@ import useFetchData from "@/hooks/FetchData";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const user = useAppSelector(selectCurrentUser);
-  const[enable,setEnabled] = useState(true)
-  if(!user){
-    setEnabled(!enable);
-  }
   const toggleNavbar = () => {
      setOpen(!open);
   };
@@ -29,7 +25,7 @@ const Navbar = () => {
  const {
     data: cartProduct,
     isLoading,
-  } = useFetchData("/cart/get-my-cart",enable);
+  } = useFetchData("/cart/get-my-cart",!!user);
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>
@@ -62,12 +58,12 @@ const Navbar = () => {
             </NavLink>
           </ul>
           <div className="flex md:gap-6 gap-2 items-center">
-            <div className="relative">
+            <Link to={"/cart"} className="relative">
               <ShoppingCart />
               <h1 className="absolute -top-4 right-0 text-primary">
                 {isLoading ? 0 : cartProduct?.length}
               </h1>
-            </div>
+            </Link>
             <Button
               variant="outline"
               size="icon"

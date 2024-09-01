@@ -1,5 +1,6 @@
 import App from "@/App";
 import MainLayout from "@/layout/MainLayout";
+import Cart from "@/pages/Cart/Cart";
 import Login from "@/pages/login/Login";
 import ProductDetail from "@/pages/ProductDetail/ProductDetail";
 import Products from "@/pages/Products/Products";
@@ -26,6 +27,10 @@ export const routes = createBrowserRouter([
       {
         path: "/product/:id",
         element: <ProductDetail />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },
