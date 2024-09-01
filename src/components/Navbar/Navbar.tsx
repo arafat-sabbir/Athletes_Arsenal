@@ -18,14 +18,18 @@ import useFetchData from "@/hooks/FetchData";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const user = useAppSelector(selectCurrentUser);
+  const[enable,setEnabled] = useState(true)
+  if(!user){
+    setEnabled(!enable);
+  }
   const toggleNavbar = () => {
-    setOpen(!open);
+     setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
  const {
     data: cartProduct,
     isLoading,
-  } = useFetchData("/cart/get-my-cart");
+  } = useFetchData("/cart/get-my-cart",enable);
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>

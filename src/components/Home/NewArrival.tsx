@@ -2,58 +2,13 @@ import Container from "@/layout/Container/Container";
 import ProductCard from "../ProductCard";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import useProducts from "@/hooks/getProducts";
+import { TProduct } from "@/pages/Products/Products";
 
 const NewArrival = () => {
-  const items = [
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-    {
-      title: "Full Elastic Track Pant",
-      vendor: "IgniteFit Studio",
-      price: 120,
-      thumbnail: "/assets/product/pant.jpg",
-    },
-  ];
+  const { data } = useProducts();
+  const products = data?.products.slice(0, 8);
+  console.log(products);
   return (
     <Container className="pb-20">
       <div className="space-y-2">
@@ -69,11 +24,15 @@ const NewArrival = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-hidden 2xl:grid-cols-4 gap-10 py-10">
-        {items.map((item, index) => (
+        {products?.map((item: TProduct, index: number) => (
           <ProductCard item={item} key={index}></ProductCard>
         ))}
       </div>
-        <Link to={"/products"}><Button size={"xxl"} className="mx-auto flex">Explore More</Button></Link>
+      <Link to={"/products"}>
+        <Button size={"xxl"} className="mx-auto flex">
+          Explore More
+        </Button>
+      </Link>
     </Container>
   );
 };

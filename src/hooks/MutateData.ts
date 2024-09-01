@@ -7,7 +7,6 @@ const useMutateData = (path: string, requestData: any) => {
   const axios = useAxiosSecure();
   const queryClient = useQueryClient();
   const key = path.split("/")[1];
-  console.log(key);
   const { mutate, data, isError, isSuccess, error, isPending } = useMutation({
     mutationFn: async () => {
       const res = await axios.post(path, requestData);
@@ -15,7 +14,7 @@ const useMutateData = (path: string, requestData: any) => {
     },
     onSuccess: (data) => {
       toast.success(data?.message);
-      queryClient.invalidateQueries(key);
+      queryClient.invalidateQueries(key as any);
     },
     onError: (error: any) => {
       console.log(error);

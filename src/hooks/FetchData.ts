@@ -2,15 +2,16 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./AxiosSecure";
 
-const useFetchData = (path: string, params = {}) => {
+const useFetchData = (path: string,enabled?: any) => {
   const axios = useAxiosSecure();
   const key = path.split("/")[1];
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: [key, params],
+    queryKey: [key],
     queryFn: async () => {
-      const res = await axios.get(path, { params });
+      const res = await axios.get(path);
       return res.data.data;
     },
+    enabled: enabled,
   });
 
   return { data, refetch, isLoading, isError };

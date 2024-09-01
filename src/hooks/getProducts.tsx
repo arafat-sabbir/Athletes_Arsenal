@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./AxiosPublic";
 
-const useProducts = (page: number=0) => {
+const useProducts = (page: number=0,categories?: string[]) => {
+  const categoryQuery = categories?.length
+  ? `&categories=${categories.join(",")}`
+  : "";
   const axiosPublic = useAxiosPublic();
   const {
     data,
@@ -9,9 +12,9 @@ const useProducts = (page: number=0) => {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ["getProducts", page],
+    queryKey: ["getProducts", page,categoryQuery],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/product/products?page=${page}`);
+      const res = await axiosPublic.get(`/product/products?page=${page}${categoryQuery}`);
       return res.data.data;  // Adjusted to return the whole data structure
     },
   });
