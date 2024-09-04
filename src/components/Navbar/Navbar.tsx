@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import {
   CircleAlert,
   House,
@@ -13,19 +13,17 @@ import { Button } from "../ui/button";
 import { Link, NavLink } from "react-router-dom";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/features/hooks";
-import useFetchData from "@/hooks/FetchData";
+import useMyCart from "@/hooks/GetMyCart";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const user = useAppSelector(selectCurrentUser);
+  console.log(user, "outside");
   const toggleNavbar = () => {
     setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
-  const { data: cartProduct, isLoading } = useFetchData(
-    "/cart/get-my-cart",
-    true
-  );
+  const { data: cartProduct, isLoading } = useMyCart();
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>

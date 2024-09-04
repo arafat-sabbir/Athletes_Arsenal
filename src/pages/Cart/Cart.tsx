@@ -1,17 +1,18 @@
-import useFetchData from "@/hooks/FetchData";
 import Container from "@/layout/Container/Container";
 import ProductCard from "@/components/ProductCard";
+import useMyCart from "@/hooks/GetMyCart";
 
 const Cart = () => {
-  const { data: cartProduct } = useFetchData("/cart/get-my-cart", true);
+  const { data: cartProduct  } = useMyCart();
+  console.log(cartProduct, "from my cart");
 
   return (
     <Container className="py-10 min-h-[75vh]">
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-    {cartProduct?.map((product:any) => (
-        <ProductCard item={product?.product}></ProductCard>
-      ))}
-    </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {cartProduct?.map((product: any) => (
+          <ProductCard item={product?.product}></ProductCard>
+        ))}
+      </div>
     </Container>
   );
 };
