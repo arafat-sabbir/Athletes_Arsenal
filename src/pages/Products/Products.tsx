@@ -1,3 +1,4 @@
+import { useRef, FormEvent, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ProductCardSkeleton from "@/components/skeletonLoader/ProductCardSkeleton";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,6 @@ import {
 import useProducts from "@/hooks/getProducts";
 import Container from "@/layout/Container/Container";
 import { Search } from "lucide-react";
-import { FormEvent, useState } from "react";
 
 export type TProduct = {
   _id: string;
@@ -34,20 +34,27 @@ const Products = () => {
   const [pageSize] = useState(10);
   const categories = ["cardio", "strength", "yoga", "accessories", "recovery"];
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // Ref to clear the input value
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
   const query = {
     searchTerm,
     page: currentPage,
     categories: selectedCategories,
     sort,
   };
+  
   const { data, isLoading, isError } = useProducts(query);
   const totalPages = Math.ceil(data?.totalProduct / pageSize);
+
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchTerm(
       (e.currentTarget.elements.namedItem("title") as HTMLInputElement).value
     );
   };
+
   const handleCategoryClick = (category: string) => {
     setSelectedCategories((prevCategories) =>
       prevCategories.includes(category)
@@ -68,34 +75,39 @@ const Products = () => {
     }
   };
 
+  const resetQuery = () => {
+    setSelectedCategories([]);
+    setSearchTerm("");
+    setSort("asc");
+    
+    // Clear the search input value
+    if (searchInputRef.current) {
+      searchInputRef.current.value = "";
+    }
+  };
+
   if (isError) {
     return (
       <div className="text-center text-red-500">Error loading products</div>
     );
   }
-  const resetQuery = () => {
-    setSelectedCategories(["all"]);
-    setSearchTerm("");
-    setSort("asc");
-  };
+
   return (
-    <Container className=" py-10 min-h-[65vh]">
+    <Container className="py-10 min-h-[65vh]">
       {/* Category Filters */}
       <form
         onSubmit={handleSearch}
-        className="flex  border-2 border-gray-300 rounded-full pl-2 mb-6 w-2/3 mx-auto"
+        className="flex border-2 border-gray-300 rounded-full  mb-6 lg:w-2/3 w-11/12 mx-auto"
       >
         <Input
           type="text"
           placeholder="Search"
           name="title"
-          className="rounded-full border-0 "
+          ref={searchInputRef}
+          className="rounded-full border-0"
         />
         <Select onValueChange={(value) => setSort(value)}>
-          <SelectTrigger
-            className="w-[250px] bg-white dark:bg-black outline-none "
-            onChange={(e) => console.log(e)}
-          >
+          <SelectTrigger className="lg:w-[250px] border-r-2 w-[100px] bg-white dark:bg-black outline-none">
             <SelectValue placeholder="Sort By" />
           </SelectTrigger>
           <SelectContent>
@@ -104,11 +116,17 @@ const Products = () => {
               <SelectItem value="asc">Low To High</SelectItem>
             </SelectGroup>
           </SelectContent>
-        </Select> 
-        <button type="submit" className=" bg-white dark:bg-black px-6 ">
+        </Select>
+        <button type="submit" className="bg-white dark:bg-black px-6">
           <Search />
         </button>
-      <button className="bg-red-500/90 text-white px-6 rounded-full rounded-l-none" type="button" onClick={resetQuery}>Reset</button>
+        <button
+          className="bg-red-500/90 text-white px-6 rounded-full rounded-l-none"
+          type="button"
+          onClick={resetQuery}
+        >
+          Reset
+        </button>
       </form>
       <div className="flex flex-wrap justify-center gap-4 mb-8">
         {categories.map((name) => (
@@ -126,14 +144,14 @@ const Products = () => {
         ))}
       </div>
       {isLoading && (
-        <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-hidden 2xl:grid-cols-4 gap-10 py-10 justify-center items-center justify-items-center">
+        <Container className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-hidden 2xl:grid-cols-4 gap-10 py-10 justify-center items-center justify-items-center ">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
             <ProductCardSkeleton key={i} />
           ))}
         </Container>
       )}
       {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center justify-items-center ">
         {data?.products.map((product: TProduct) => (
           <ProductCard key={product._id} item={product} />
         ))}
