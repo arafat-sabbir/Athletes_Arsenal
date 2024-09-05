@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import {
   CircleAlert,
   House,
@@ -18,7 +18,6 @@ import useMyCart from "@/hooks/GetMyCart";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const user = useAppSelector(selectCurrentUser);
-  console.log(user, "outside");
   const toggleNavbar = () => {
     setOpen(!open);
   };
@@ -110,7 +109,7 @@ const Navbar = () => {
         >
           <div className="flex justify-between w-full p-4">
             <h1 className="px-2 text-md text-primary font-bold">
-              FinalTry Innovations
+              Athlete's Arsenal
             </h1>
             <svg
               onClick={toggleNavbar}

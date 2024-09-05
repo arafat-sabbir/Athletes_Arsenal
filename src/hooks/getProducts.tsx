@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./AxiosPublic";
+
+
+
 type TQuery = {
   searchTerm?: string;
   page?: number;
@@ -19,7 +22,7 @@ const useProducts = (query?: TQuery) => {
     query?.sort || "desc",
   ];
 
-  const { data, isLoading, isError, refetch } = useQuery({
+  return useQuery({
     queryKey,
     queryFn: async () => {
       const res = await axiosPublic.get(
@@ -32,8 +35,6 @@ const useProducts = (query?: TQuery) => {
     // Optionally add a query on query key change
     staleTime: 0, // Set to 0 if you want fresh data on every query
   });
-
-  return { data, refetch, isLoading, isError };
 };
 
 export default useProducts;

@@ -1,15 +1,19 @@
 import Container from "@/layout/Container/Container";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { TProduct } from "../Products/Products";
+import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import useMutateData from "@/hooks/MutateData";
 import { LoaderCircle } from "lucide-react";
+import { toast } from "sonner";
+import useFetchData from "@/hooks/FetchData";
+import { TProduct } from "../Products/Products";
 
 const ProductDetail = () => {
-  const { state }: { state: TProduct } = useLocation();
+  const { id } = useParams();
+  const { data } = useFetchData(`/product/${id}`);
+  const product: TProduct = data;
+  const [quantity, setQuantity] = useState(1);
   const [currentSlider, setCurrentSlider] = useState(0);
-  const product = state;
   useEffect(() => {
     const intervalId = setInterval(
       () =>
@@ -28,10 +32,14 @@ const ProductDetail = () => {
       behavior: "smooth",
     });
   }, []);
-  const { mutate, isPending } = useMutateData("/cart/add-to-cart", {
-    product: product?._id,
-    quantity: 2,
-  });
+  const { mutate, isPending } = useMutateData(
+    "/cart/add-to-cart",
+    {
+      product: product?._id,
+      quantity,
+    },
+    ["cart,product"]
+  );
   return (
     <Container className="py-10">
       <div className="flex justify-center gap-10 lg:flex-row flex-col">
@@ -93,21 +101,52 @@ const ProductDetail = () => {
           <p className="text-md font-medium text-title-dark">
             Vendor: {product?.vendor}
           </p>
-          <Button
-            disabled={isPending}
-            className="w-full"
-            onClick={() => {
-              mutate();
-            }}
-          >
-            {isPending ? (
-              <>
-                Adding <LoaderCircle className="animate-spin ml-2" size={20} />
-              </>
-            ) : (
-              "Add To Cart"
-            )}
-          </Button>
+          <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center gap-2">
+              {/* Decrease Quantity If Quantity is more than 1 */}
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  if (quantity > 1) {
+                    setQuantity(quantity - 1);
+                  }
+                }}
+              >
+                -
+              </Button>
+              <h1 className="w-[30px]"> {quantity}</h1>
+              <Button
+                variant={"outline"}
+                onClick={() => {
+                  if (quantity < product?.stockCount) setQuantity(quantity + 1);
+                }}
+              >
+                +
+              </Button>
+            </div>
+            {/* Decrease Quantity If StockCount is More Then 0 And Quantity is Less Then StockCount */}
+            <Button
+              disabled={isPending || product?.stockCount === 0}
+              className="w-full"
+              onClick={() => {
+                if (product?.stockCount < 0 && quantity < product?.stockCount) {
+                  toast.error("Out of Stock");
+                  return;
+                } else {
+                  mutate();
+                }
+              }}
+            >
+              {isPending ? (
+                <>
+                  Adding
+                  <LoaderCircle className="animate-spin ml-2" size={20} />
+                </>
+              ) : (
+                "Add To Cart"
+              )}
+            </Button>
+          </div>
         </div>
       </div>
     </Container>
