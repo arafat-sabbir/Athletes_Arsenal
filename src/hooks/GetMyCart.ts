@@ -6,14 +6,19 @@ import useAxiosSecure from "./AxiosSecure";
 const useMyCart = () => {
   const axios = useAxiosSecure();
   const user = useAppSelector(selectCurrentUser);
-  // Determine if the query should be enabled based on `enabled` parameter and user existence
+
+  // If there is no user, return an empty query result to prevent the API request
+  const userId = user?.userId;
+
   return useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
+      if (!userId) return Promise.reject(new Error("User not authenticated"));
+      
       const res = await axios.get("/cart/get-my-cart");
       return res.data.data;
     },
-    enabled: !!user,
+    enabled: Boolean(userId), // Enable only if userId exists
   });
 };
 
