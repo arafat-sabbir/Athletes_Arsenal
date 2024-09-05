@@ -22,7 +22,8 @@ const Navbar = () => {
     setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
-  const { data: cartProduct, isLoading } = useMyCart();
+  const { data, isLoading } = useMyCart();
+  const cartProducts = data?.products;
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
       <Container>
@@ -58,7 +59,7 @@ const Navbar = () => {
             <Link to={"/cart"} className="relative">
               <ShoppingCart />
               <h1 className="absolute -top-4 right-0 text-primary">
-                {isLoading ? 0 : cartProduct?.length}
+                {isLoading ? 0 : cartProducts?.length}
               </h1>
             </Link>
             <Button

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Container from "@/layout/Container/Container";
 import { Button } from "@/components/ui/button";
 import useMyCart from "@/hooks/GetMyCart";

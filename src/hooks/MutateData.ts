@@ -3,29 +3,33 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "./AxiosSecure";
 import { toast } from "sonner";
 
+type HttpMethod = "post" | "put" | "delete" | "patch"; // Add any other methods you might need
+
 const useMutateData = (
+  method: HttpMethod,
   path: string,
-  requestData: any,
+  requestData?: any, // Optional for methods like `get`
   invalidateQueries?: string[]
 ) => {
   const axios = useAxiosSecure();
   const queryClient = useQueryClient();
-  const { mutate, data, isError, isSuccess, error, isPending } = useMutation({
+
+  return useMutation({
     mutationFn: async () => {
-      const res = await axios.post(path, requestData);
+      const res = await axios[method](path, requestData); // Dynamic method call
       return res.data;
     },
     onSuccess: (data) => {
-      toast.success(data?.message);
-      queryClient.invalidateQueries(invalidateQueries as any);
+      toast.success(data?.message || "Operation successful");
+      if (invalidateQueries) {
+        queryClient.invalidateQueries(invalidateQueries as any);
+      }
     },
     onError: (error: any) => {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Something Went Wrong");
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     },
   });
-
-  return { mutate, data, isError, isSuccess, error, isPending };
 };
 
 export default useMutateData;

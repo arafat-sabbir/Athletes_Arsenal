@@ -9,11 +9,22 @@ import useFetchData from "@/hooks/FetchData";
 import { TProduct } from "../Products/Products";
 
 const ProductDetail = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   const { id } = useParams();
   const { data } = useFetchData(`/product/${id}`);
   const product: TProduct = data;
+
+  // Quantity State To Add Product To Cart
   const [quantity, setQuantity] = useState(1);
+
   const [currentSlider, setCurrentSlider] = useState(0);
+
+  // Slider Image Change Handler
   useEffect(() => {
     const intervalId = setInterval(
       () =>
@@ -26,13 +37,12 @@ const ProductDetail = () => {
     );
     return () => clearInterval(intervalId);
   }, [currentSlider, product?.productImages?.length]);
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
+
+  // Scroll To Top Of The Page
+
+  // Add TO Cart Mutation Handler
   const { mutate, isPending } = useMutateData(
+    "post",
     "/cart/add-to-cart",
     {
       product: product?._id,
@@ -102,6 +112,7 @@ const ProductDetail = () => {
             Vendor: {product?.vendor}
           </p>
           <div className="flex items-center justify-center gap-6">
+            {/* Quantity Handler button */}
             <div className="flex items-center gap-2">
               {/* Decrease Quantity If Quantity is more than 1 */}
               <Button
@@ -114,7 +125,7 @@ const ProductDetail = () => {
               >
                 -
               </Button>
-              <h1 className="w-[30px]"> {quantity}</h1>
+              <h1 className="w-[30px] mx-auto text-center"> {quantity}</h1>
               <Button
                 variant={"outline"}
                 onClick={() => {

@@ -1,14 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
+import useMutateData from "@/hooks/MutateData";
 import { formatCurrency } from "@/utils/FormatCurrency";
+import { Minus, Plus } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const CartItem = ({ item }: { item: any }) => {
-  const { product, quantity } = item;
+  const { product, quantity: productQuantity } = item;
+  const [quantity, setQuantity] = useState(productQuantity || 1);
   const { title, price, vendor, thumbnail } = product;
-
+  const { mutate, isPending } = useMutateData(
+    "delete",
+    `/cart/delete-cart-product/${item._id}`,
+    {},
+    ["cart"]
+  );
+  const { mutate: updateQuantity, isPending: isQuantityPending } =
+    useMutateData(
+      "patch",
+      `/cart/update-cart-product/${item._id}`,
+      { quantity },
+      ["cart"]
+    );
   return (
-    <div className="flex items-center space-x-4 p-4 border-b">
+    <div className="flex items-center space-x-4 p-4 border-b ">
       {/* Product Image */}
       <Link to={`/product/${product._id}`} className="w-24">
         <img
@@ -24,22 +40,55 @@ const CartItem = ({ item }: { item: any }) => {
           <Link to={`/product/${product._id}`}>{title}</Link>
         </h3>
         <p className="text-gray-500 text-sm">Sold by: {vendor}</p>
-        <div className="flex items-center space-x-2">
-          <span>Qty: </span>
-          <input
-            type="number"
-            className="w-16 border rounded p-1 text-center"
-            value={quantity}
-            min={1}
-          />
+        <div className="flex  items-center space-x-2">
+          {/* Quantity Handler button */}
+          <div className="flex items-center gap-2 justify-center">
+            {/* Decrease Quantity If Quantity is more than 1 */}
+            <Button
+              variant={"outline"}
+              className="bg-white"
+              onClick={() => {
+                if (quantity > 1) {
+                  setQuantity(quantity - 1);
+                }
+              }}
+            >
+              <Minus />
+            </Button>
+            <h1 className="w-[30px] mx-auto text-center">{quantity}</h1>
+            <Button
+              className="bg-white"
+              variant={"outline"}
+              onClick={() => {
+                if (product?.stockCount > 0) setQuantity(quantity + 1);
+              }}
+            >
+              <Plus />
+            </Button>
+            {productQuantity !== quantity && (
+              <Button
+                disabled={isQuantityPending}
+                onClick={() => updateQuantity()}
+              >
+                Save
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Price Details */}
       <div className="text-right">
         <p className="text-lg font-semibold">{formatCurrency(price)}</p>
-        <Button className="mt-2" variant="link" onClick={() => {/* Handle remove from cart */}}>
-          Remove
+        <Button
+          className="mt-2"
+          disabled={isPending}
+          variant="link"
+          onClick={() => {
+            mutate();
+          }}
+        >
+          {isPending ? "Removing..." : "Remove"}
         </Button>
       </div>
     </div>
