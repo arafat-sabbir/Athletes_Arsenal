@@ -8,7 +8,6 @@ import { TProduct } from "@/pages/Products/Products";
 const NewArrival = () => {
   const { data } = useProducts();
   const products = data?.products.slice(0, 8);
-  console.log(products);
   return (
     <Container className="pb-20">
       <div className="space-y-2">

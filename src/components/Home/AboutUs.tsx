@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <section className="bg-[#292828] px-6 py-10 text-white dark:bg-[#2928285d] md:px-12 lg:px-20 xl:px-40">
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-20">
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 lg:w-1/2">
           <img src="/assets/Background/about.png" alt="About Us" className="w-full h-auto" />
         </div>
         <div className="space-y-4">

@@ -14,7 +14,10 @@ import BackToHome from "../BackToHome";
 import useAxiosPublic from "@/hooks/AxiosPublic";
 import { useAppDispatch } from "@/redux/features/hooks";
 import { decodeToken } from "@/utils/decodeToken";
-import { setUser, TUser } from "@/redux/features/auth/authSlice";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { TUser } from "@/types/user/user";
+import { useState } from "react";
+import { Loader } from "lucide-react";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -26,6 +29,7 @@ const LoginForm = ({ className }: { className?: string }) => {
   const axios = useAxiosPublic();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof LoginFormValidation>>({
     resolver: zodResolver(LoginFormValidation),
@@ -35,15 +39,17 @@ const LoginForm = ({ className }: { className?: string }) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof LoginFormValidation>) => {
+    setLoading(true);
     try {
       const result = await axios.post("/user/login", values);
-      toast.success("Login Successful");
+      toast.success(result?.data?.message);
       const user = decodeToken(result.data.data.accessToken) as TUser;
       dispatch(setUser({ user, token: result.data.data.accessToken }));
       navigate("/");
     } catch (error: any) {
       toast.error(error.response.data.message);
-      console.log(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -72,8 +78,12 @@ const LoginForm = ({ className }: { className?: string }) => {
               placeholder="Enter Your Password"
               iconAlt="user"
             />
-            <Button className="mt-4 bg-primary mx-auto lg:mx-0 w-full">
+            <Button
+              disabled={loading}
+              className="mt-4 bg-primary mx-auto lg:mx-0 w-full"
+            >
               Login
+              {loading && <Loader size={22} className="animate-spin ml-2" />}
             </Button>
           </form>
         </Form>

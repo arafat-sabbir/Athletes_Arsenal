@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/select";
 import useProducts from "@/hooks/getProducts";
 import Container from "@/layout/Container/Container";
-import { Search } from "lucide-react";
+import {  Search } from "lucide-react";
+import NotFound from "@/components/NotFound";
 
 export type TProduct = {
   _id: string;
@@ -34,7 +35,7 @@ const Products = () => {
   const [pageSize] = useState(10);
   const categories = ["cardio", "strength", "yoga", "accessories", "recovery"];
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   // Ref to clear the input value
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -44,7 +45,7 @@ const Products = () => {
     categories: selectedCategories,
     sort,
   };
-  
+
   const { data, isLoading, isError } = useProducts(query);
   const totalPages = Math.ceil(data?.totalProduct / pageSize);
 
@@ -79,7 +80,7 @@ const Products = () => {
     setSelectedCategories([]);
     setSearchTerm("");
     setSort("asc");
-    
+
     // Clear the search input value
     if (searchInputRef.current) {
       searchInputRef.current.value = "";
@@ -128,6 +129,7 @@ const Products = () => {
           Reset
         </button>
       </form>
+
       <div className="flex flex-wrap justify-center gap-4 mb-8">
         {categories.map((name) => (
           <div
@@ -150,12 +152,17 @@ const Products = () => {
           ))}
         </Container>
       )}
+      {!isLoading && !data?.products?.length && (
+       <NotFound title="No Products Found"/>
+      )}
       {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center justify-items-center ">
-        {data?.products.map((product: TProduct) => (
-          <ProductCard key={product._id} item={product} />
-        ))}
-      </div>
+      {data?.products?.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center justify-items-center ">
+          {data?.products.map((product: TProduct) => (
+            <ProductCard key={product._id} item={product} />
+          ))}
+        </div>
+      )}
 
       {/* Pagination */}
       <div className="flex justify-center gap-6 items-center py-8">

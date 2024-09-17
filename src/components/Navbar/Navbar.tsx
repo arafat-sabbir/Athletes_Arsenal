@@ -14,15 +14,16 @@ import { Link, NavLink } from "react-router-dom";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/features/hooks";
 import useMyCart from "@/hooks/GetMyCart";
+import UserProfile from "./UserProfile";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const user = useAppSelector(selectCurrentUser);
+const user = useAppSelector(selectCurrentUser);
   const toggleNavbar = () => {
     setOpen(!open);
   };
   const { setTheme, theme } = useTheme();
-  const { data, isLoading } = useMyCart();
+  const { data } = useMyCart();
   const cartProducts = data?.products;
   return (
     <nav className=" border-b sticky top-0 text-black w-full bg-white dark:bg-black z-50  dark:text-white ">
@@ -31,7 +32,7 @@ const Navbar = () => {
           <div>
             <Link
               to={"/"}
-              className="text-xl  font-zen flex items-center gap-1"
+              className="md:text-xl text-sm  font-zen flex items-center gap-1"
             >
               <img src="/assets/logo/logo.png" className="h-14 w-14" alt="" />{" "}
               Athlete's Arsenal
@@ -56,12 +57,6 @@ const Navbar = () => {
             </NavLink>
           </ul>
           <div className="flex md:gap-6 gap-2 items-center">
-            <Link to={"/cart"} className="relative">
-              <ShoppingCart />
-              <h1 className="absolute -top-4 right-0 text-primary">
-                {isLoading ? 0 : cartProducts?.length}
-              </h1>
-            </Link>
             <Button
               variant="outline"
               size="icon"
@@ -81,7 +76,7 @@ const Navbar = () => {
                 </Button>
               </Link>
             ) : (
-              <p>{user?.name || "lkadjf"}</p>
+              <UserProfile user={user} cart={cartProducts?.length} />
             )}
           </div>
           <div className="lg:hidden block ">

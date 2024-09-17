@@ -1,6 +1,7 @@
 import App from "@/App";
 import MainLayout from "@/layout/MainLayout";
 import Cart from "@/pages/Cart/Cart";
+import Checkout from "@/pages/Checkout/Checkout";
 import Login from "@/pages/login/Login";
 import ProductDetail from "@/pages/ProductDetail/ProductDetail";
 import Products from "@/pages/Products/Products";
@@ -31,6 +32,10 @@ export const routes = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
     ],
   },

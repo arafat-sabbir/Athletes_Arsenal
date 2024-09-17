@@ -23,6 +23,6 @@ createRoot(document.getElementById("root")!).render(
         </PersistGate>
       </Provider>
     </QueryClientProvider>
-    <Toaster richColors />
+    <Toaster richColors position="top-center" />
   </StrictMode>
 );

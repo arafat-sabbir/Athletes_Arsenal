@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import useMutateData from "@/hooks/MutateData";
-import { LoaderCircle } from "lucide-react";
+import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import useFetchData from "@/hooks/FetchData";
 import { TProduct } from "../Products/Products";
@@ -151,7 +151,7 @@ const ProductDetail = () => {
               {isPending ? (
                 <>
                   Adding
-                  <LoaderCircle className="animate-spin ml-2" size={20} />
+                  <Loader className="animate-spin ml-2" size={20} />
                 </>
               ) : (
                 "Add To Cart"

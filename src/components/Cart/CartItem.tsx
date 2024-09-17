@@ -2,9 +2,10 @@
 import { Button } from "@/components/ui/button";
 import useMutateData from "@/hooks/MutateData";
 import { formatCurrency } from "@/utils/FormatCurrency";
-import { Minus, Plus } from "lucide-react";
+import { Loader, Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const CartItem = ({ item }: { item: any }) => {
   const { product, quantity: productQuantity } = item;
@@ -23,6 +24,14 @@ const CartItem = ({ item }: { item: any }) => {
       { quantity },
       ["cart"]
     );
+  const handleDelete = () => {
+    toast("Are You Sure", {
+      action: {
+        label: "Yes",
+        onClick: () => mutate(),
+      },
+    });
+  };
   return (
     <div className="flex items-center space-x-4 p-4 border-b ">
       {/* Product Image */}
@@ -84,11 +93,16 @@ const CartItem = ({ item }: { item: any }) => {
           className="mt-2"
           disabled={isPending}
           variant="link"
-          onClick={() => {
-            mutate();
-          }}
+          onClick={handleDelete}
         >
-          {isPending ? "Removing..." : "Remove"}
+          {isPending ? (
+            <>
+              Removing
+              <Loader className="animate-spin ml-2" />
+            </>
+          ) : (
+            <>Remove</>
+          )}
         </Button>
       </div>
     </div>

@@ -10,7 +10,7 @@ const useAxiosSecure = () => {
 
   // Create Axios instance
   const instance = axios.create({
-    baseURL: "https://athletes-arsenal-server.vercel.app/api/v1",
+    baseURL: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
     withCredentials: true,
   });
 
