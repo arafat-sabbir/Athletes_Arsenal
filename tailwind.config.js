@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily:{
+        "bai":"var(--font-bai)"
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

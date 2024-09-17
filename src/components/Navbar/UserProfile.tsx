@@ -28,11 +28,11 @@ import {
             />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="p-6 space-y-4 flex flex-col items-center text-center bg-white rounded-xl shadow-lg border border-gray-200 w-64">
-          <h1 className="capitalize text-lg font-semibold text-gray-800">
+        <DropdownMenuContent className="p-6 space-y-2 flex flex-col items-center text-center bg-white rounded-xl shadow-lg border border-gray-200 w-64">
+          <h1 className="capitalize font-bai text-lg font-semibold text-gray-800">
             {user?.name}
           </h1>
-          <h3 className="text-sm text-gray-500">{user?.email}</h3>
+          <h3 className="text-md font-semibold font-bai text-gray-500">{user?.email}</h3>
           <Link
             className="flex items-center gap-2 w-full justify-center py-2 px-4 text-sm text-white bg-primary rounded-md hover:bg-primary-dark transition duration-300"
             to={"/cart"}

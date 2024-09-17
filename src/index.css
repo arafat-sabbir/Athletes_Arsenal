@@ -7,6 +7,7 @@
 
 @layer base {
   :root {
+    --font-bai: "Bai Jamjuree", sans-serif;
     --background: 192, 15%, 92%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -77,10 +78,7 @@
     @apply bg-background text-foreground tracking-wide;
   }
 }
-.font-bai {
-  font-family: "Bai Jamjuree", sans-serif;
-  font-style: normal;
-}
+
 
 .active {
   font-weight: 700;

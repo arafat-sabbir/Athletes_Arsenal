@@ -15,18 +15,8 @@ import useProducts from "@/hooks/getProducts";
 import Container from "@/layout/Container/Container";
 import {  Search } from "lucide-react";
 import NotFound from "@/components/NotFound";
+import { TProduct } from "@/types/user/product";
 
-export type TProduct = {
-  _id: string;
-  title: string;
-  description: string;
-  price: number;
-  thumbnail: string;
-  category: string;
-  stockCount: number;
-  vendor: string;
-  productImages: string[];
-};
 
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);

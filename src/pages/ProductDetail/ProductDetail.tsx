@@ -6,7 +6,7 @@ import useMutateData from "@/hooks/MutateData";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import useFetchData from "@/hooks/FetchData";
-import { TProduct } from "../Products/Products";
+import { TProduct } from "@/types/user/product";
 
 const ProductDetail = () => {
   useEffect(() => {

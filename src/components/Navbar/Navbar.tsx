@@ -32,26 +32,26 @@ const user = useAppSelector(selectCurrentUser);
           <div>
             <Link
               to={"/"}
-              className="md:text-xl text-sm  font-zen flex items-center gap-1"
+              className="md:text-xl text-sm  font-bai font-semibold tracking-wide flex items-center gap-1"
             >
               <img src="/assets/logo/logo.png" className="h-14 w-14" alt="" />{" "}
               Athlete's Arsenal
             </Link>
           </div>
 
-          <ul className="lg:flex hidden gap-6">
-            <NavLink to={"/"} className={"rounded-full"}>
+          <ul className="lg:flex hidden gap-6 ">
+            <NavLink to={"/"} className={"rounded-full font-bai"} >
               Home
             </NavLink>
             <NavLink
               to={"/about"}
-              className="hover:text-primary   cursor-pointer transition-all duration-300"
+              className="hover:text-primary  font-bai cursor-pointer transition-all duration-300"
             >
               About Us
             </NavLink>
             <NavLink
               to="products"
-              className="hover:text-primary   cursor-pointer transition-all duration-300"
+              className="hover:text-primary font-bai  cursor-pointer transition-all duration-300"
             >
               Our Products
             </NavLink>
