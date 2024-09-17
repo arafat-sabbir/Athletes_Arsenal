@@ -23,7 +23,7 @@ const NewArrival = () => {
           All Of Our Product ar from Top Brand
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-hidden 2xl:grid-cols-4 gap-10 py-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-hidden justify-center items-center justify-items-center 2xl:grid-cols-4 gap-10 py-10">
         {products?.map((item: TProduct, index: number) => (
           <ProductCard item={item} key={index}></ProductCard>
         ))}
