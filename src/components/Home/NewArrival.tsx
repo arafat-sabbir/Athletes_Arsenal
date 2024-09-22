@@ -3,7 +3,7 @@ import ProductCard from "../ProductCard";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import useProducts from "@/hooks/getProducts";
-import { TProduct } from "@/pages/Products/Products";
+import { TProduct } from "@/types/user/product";
 
 const NewArrival = () => {
   const { data } = useProducts();
@@ -11,13 +11,13 @@ const NewArrival = () => {
   return (
     <Container className="pb-20">
       <div className="space-y-2">
-        <h3 className="text-2xl font-medium text-primary text-center">
+        <h3 className="text-2xl font-zen font-medium text-primary text-center">
           Featured Products
         </h3>
-        <h1 className="text-4xl font-medium text-center tracking-wider ">
+        <h1 className="text-4xl font-zen font-medium text-center tracking-wider ">
           Top Brand Products
         </h1>
-        <p className="text-center tracking-wider text-sm">
+        <p className="text-center font-zen tracking-wider text-sm">
           Choose From Thousand Of Our Latest Product <br />
           All Of Our Product ar from Top Brand
         </p>

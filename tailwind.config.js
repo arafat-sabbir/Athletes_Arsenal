@@ -18,7 +18,8 @@ module.exports = {
     },
     extend: {
       fontFamily:{
-        "bai":"var(--font-bai)"
+        "bai":"var(--font-bai)",
+        "zen":"var(--font-zen)"
       },
       colors: {
         border: "hsl(var(--border))",

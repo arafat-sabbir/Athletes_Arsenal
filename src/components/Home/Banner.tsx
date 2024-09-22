@@ -6,7 +6,7 @@ const Banner = () => {
       <section className="2xl:px-44 lg:px-32 px-3 w-full h-full mx-auto flex justify-center items-center">
         <div className="space-y-2">
           <h3 className="text-primary text-xl">Exclusive Discount</h3>
-          <h1 className="lg:text-7xl text-4xl text-white tracking-wider">
+          <h1 className="lg:text-7xl font-zen text-4xl text-white tracking-wider">
             SELECT <br /> WORKOUT, <br />
             STAY <br /> COMMITTED
           </h1>

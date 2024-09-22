@@ -9,9 +9,9 @@ const AboutUs = () => {
           <img src="/assets/Background/about.png" alt="About Us" className="w-full h-auto" />
         </div>
         <div className="space-y-4">
-          <h1 className="text-2xl md:text-3xl font-medium tracking-wider">
-            The <span className="text-primary">Gym</span> with Safe and{" "}
-            <span className="text-primary">Comfort Zone</span>
+          <h1 className="text-2xl font-zen md:text-3xl font-medium tracking-wider">
+            The <span className="text-primary font-zen">Gym</span> with Safe and{" "}
+            <span className="text-primary font-zen">Comfort Zone</span>
           </h1>
           <p className="text-base md:text-lg">
             Aenean vel elit scelerisque mauris pellentesque. At varius vel

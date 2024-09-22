@@ -1,4 +1,4 @@
-import { TProduct } from "@/pages/Products/Products";
+import { TProduct } from "@/types/user/product";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 
@@ -15,8 +15,8 @@ const ProductCard = ({ item }: { item: TProduct }) => {
         {vendor}
       </h3>
       <div className="flex justify-between pb-2">
-        <h1 className="text-wrap w-9/12">{title}</h1>
-        <p className="text-primary">${price}</p>
+        <h1 className="text-wrap w-9/12 font-zen">{title}</h1>
+        <p className="text-primary font-zen">${price}</p>
       </div>
       <Link to={`/product/${item._id}`} state={item} className="w-full">
         <Button  className="w-full">

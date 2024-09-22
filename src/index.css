@@ -8,6 +8,7 @@
 @layer base {
   :root {
     --font-bai: "Bai Jamjuree", sans-serif;
+    --font-zen: "Zen Dots", sans-serif;
     --background: 192, 15%, 92%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -70,7 +71,7 @@
 @layer base {
   * {
     @apply border-border;
-    font-family: "Zen Dots", sans-serif;
+    font-family:"Bai Jamjuree", sans-serif;
     font-weight: 400;
     font-style: normal;
   }

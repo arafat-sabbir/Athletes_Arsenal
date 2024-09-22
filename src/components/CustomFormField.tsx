@@ -62,7 +62,7 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
               type={props?.type}
               accept={props?.accept}
               multiple={props?.multiple}
-              className={cn("focus:ring-0 focus:outline-none", className)}
+              className={cn("focus:ring-0 focus:outline-none font-bai ", className)}
             />
           </FormControl>
         </div>
@@ -77,10 +77,10 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
             international
             withCountryCallingCode
             value={field.value as E164Number | undefined}
-            className={cn("input-phone", className)}
+            className={cn("border border-gray-300 p-1.5 font-bai", className)}
             numberInputProps={{
               className:
-                "rounded-md px-4 focus:outline-none w-1/2 bg-transparent dark:bg-transparent text-xl text-gray-500", // my Tailwind classes
+                "rounded-md px-4 focus:outline-none w-1/2 bg-transparent dark:bg-transparent text-gray-500", // my Tailwind classes
             }}
           />
         </FormControl>
