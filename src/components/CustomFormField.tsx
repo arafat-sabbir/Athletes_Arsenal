@@ -29,6 +29,7 @@ interface CustomProps {
   placeholder: string;
   iconSrc?: string;
   disabled?: boolean;
+  required?: boolean;
   dateFormat?: string;
   showTimeSelect?: boolean;
   children?: ReactNode;
@@ -40,8 +41,15 @@ interface CustomProps {
 }
 
 const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
-  const { iconSrc, iconAlt, fieldType, placeholder, className, onChange } =
-    props;
+  const {
+    iconSrc,
+    iconAlt,
+    fieldType,
+    placeholder,
+    className,
+    onChange,
+    required = false,
+  } = props;
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -59,10 +67,14 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
             <Input
               placeholder={placeholder}
               {...field}
+              required={required}
               type={props?.type}
               accept={props?.accept}
               multiple={props?.multiple}
-              className={cn("focus:ring-0 focus:outline-none font-bai ", className)}
+              className={cn(
+                "focus:ring-0 focus:outline-none font-bai ",
+                className
+              )}
             />
           </FormControl>
         </div>
@@ -75,6 +87,7 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
             defaultCountry="BD"
             placeholder={placeholder}
             international
+            required={required}
             withCountryCallingCode
             value={field.value as E164Number | undefined}
             className={cn("border border-gray-300 p-1.5 font-bai", className)}
@@ -91,6 +104,7 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
           <Textarea
             placeholder={props.placeholder}
             {...field}
+            required={required}
             className={cn("border focus:ring-0 focus:outline-none", className)}
             disabled={props.disabled}
           />
@@ -100,6 +114,7 @@ const RenderIField = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <FormControl>
           <Select
+            required={required}
             onValueChange={(value: string) => {
               field.onChange(value);
               if (onChange) onChange(value);

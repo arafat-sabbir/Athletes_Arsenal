@@ -4,7 +4,6 @@ import {
   House,
   Moon,
   Package,
-  ShoppingCart,
   Sun,
 } from "lucide-react";
 import Container from "@/layout/Container/Container";
@@ -44,7 +43,7 @@ const user = useAppSelector(selectCurrentUser);
               Home
             </NavLink>
             <NavLink
-              to={"/about"}
+              to={"/about-us"}
               className="hover:text-primary  font-bai cursor-pointer transition-all duration-300"
             >
               About Us

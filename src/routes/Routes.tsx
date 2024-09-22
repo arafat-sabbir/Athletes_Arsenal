@@ -1,5 +1,6 @@
 import App from "@/App";
 import MainLayout from "@/layout/MainLayout";
+import AboutUs from "@/pages/AboutUs/AboutUs";
 import Cart from "@/pages/Cart/Cart";
 import Checkout from "@/pages/Checkout/Checkout";
 import Login from "@/pages/login/Login";
@@ -28,6 +29,10 @@ export const routes = createBrowserRouter([
       {
         path: "/product/:id",
         element: <ProductDetail />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
       },
       {
         path: "/cart",

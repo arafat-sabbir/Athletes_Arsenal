@@ -4,13 +4,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { SelectItem } from "../ui/select";
-import { toast } from "sonner";
 import { CheckoutFormValidation } from "@/lib/validation";
 import CustomFormField from "../CustomFormField";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Loader } from "lucide-react";
-import useAxiosSecure from "@/hooks/AxiosSecure";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -92,6 +90,7 @@ const CheckoutForm = ({
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="fullName"
+            required={true}
             label="Full Name"
             placeholder="Enter Full Name"
             iconAlt="user"
@@ -99,6 +98,7 @@ const CheckoutForm = ({
           <CustomFormField
             className="placeholder:text-[15px]"
             control={form.control}
+            required={true}
             fieldType={FormFieldType.INPUT}
             name="email"
             label="Email"
@@ -107,6 +107,7 @@ const CheckoutForm = ({
           <CustomFormField
             className="placeholder:text-[15px]"
             control={form.control}
+            required={true}
             fieldType={FormFieldType.PHONE_INPUT}
             name="phone"
             label="Phone"
@@ -118,6 +119,7 @@ const CheckoutForm = ({
             onChange={handleRegionChange}
             fieldType={FormFieldType.SELECT}
             control={form.control}
+            required={true}
             name="region"
             label="Region"
             placeholder="Select a Region"
@@ -135,6 +137,7 @@ const CheckoutForm = ({
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="address"
+            required={true}
             label="Address"
             placeholder="Example: House# 39, Street# 432 ,CDA Road"
             iconAlt="user"
@@ -144,6 +147,7 @@ const CheckoutForm = ({
             fieldType={FormFieldType.SELECT}
             onChange={handleCityChange}
             control={form.control}
+            required={true}
             name="city"
             label="City"
             disabled={!selectedRegion}
@@ -164,6 +168,7 @@ const CheckoutForm = ({
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="buildingNo"
+            required={true}
             label="Building / House No / Floor / Street"
             placeholder="Example: Building# 25, Floor# 2Fa"
             iconAlt="user"
@@ -173,6 +178,7 @@ const CheckoutForm = ({
             fieldType={FormFieldType.SELECT}
             control={form.control}
             name="area"
+            required={true}
             label="Area"
             disabled={!city}
             placeholder="Select Your Area"

@@ -50,7 +50,6 @@ const Checkout = () => {
   // 2. Define a submit handler.
 
   const onSubmit = async (values: z.infer<typeof CheckoutFormValidation>) => {
-    setLoading(true);
     try {
       const response = await axios.post("/address/add-new-address", values);
       toast.success(response?.data?.message);
@@ -231,7 +230,7 @@ const Checkout = () => {
                       Please Select A Delivery Address
                     </DialogTitle>
                     <div className="space-y-4 mt-4 max-h-[280px] overflow-y-auto">
-                      {myAddresses?.map((address) => (
+                      {myAddresses?.map((address:TAddress) => (
                         <Card
                           key={address._id}
                           className={`p-4 border-2 ${

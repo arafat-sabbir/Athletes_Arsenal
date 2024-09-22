@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { TUser } from "../auth/authSlice";
+import { TUser } from "@/types/user/user";
 export type TCart = {
   userId: string;
   role: string;
