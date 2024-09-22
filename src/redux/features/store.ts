@@ -18,6 +18,7 @@ const persistConfig = {
   storage,
 };
 
+// persistStore(store);
 const persisitedReducer = persistReducer(persistConfig, authSlice);
 export const store = configureStore({
   reducer: {
