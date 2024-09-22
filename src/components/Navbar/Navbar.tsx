@@ -123,14 +123,20 @@ const user = useAppSelector(selectCurrentUser);
             </svg>
           </div>
           <ul className="w-full p-4">
-            <NavLink to={"/"} className="flex gap-2  p-2">
-              <House /> Home
+          <NavLink to={"/"} className={"rounded-full font-bai"} >
+              Home
             </NavLink>
-            <NavLink to="contact" className="flex gap-2  p-2">
-              <CircleAlert /> Contact Us
+            <NavLink
+              to={"/about-us"}
+              className="hover:text-primary  font-bai cursor-pointer transition-all duration-300"
+            >
+              About Us
             </NavLink>
-            <NavLink to="ourProjects" className="flex gap-2  p-2">
-              <Package /> Our Projects
+            <NavLink
+              to="products"
+              className="hover:text-primary font-bai  cursor-pointer transition-all duration-300"
+            >
+              Our Products
             </NavLink>
           </ul>
         </div>
