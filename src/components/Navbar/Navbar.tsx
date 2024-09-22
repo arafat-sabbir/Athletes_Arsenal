@@ -11,7 +11,7 @@ import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/features/hooks";
 import useMyCart from "@/hooks/GetMyCart";
 import UserProfile from "./UserProfile";
-
+// nav
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 const user = useAppSelector(selectCurrentUser);
