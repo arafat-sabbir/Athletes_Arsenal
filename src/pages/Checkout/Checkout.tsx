@@ -6,13 +6,12 @@ import Container from "@/layout/Container/Container";
 import { TCartProduct } from "@/types/user/product";
 import { TUser } from "@/types/user/user";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import generateImage from "@/utils/generateImage";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -23,25 +22,15 @@ import { toast } from "sonner";
 import { z } from "zod";
 import useAxiosSecure from "@/hooks/AxiosSecure";
 import { TAddress } from "@/types/address/address";
+import useMyAddress from "@/hooks/GetMyAddress";
+import { Loader } from "lucide-react";
 
 const Checkout = () => {
   const axios = useAxiosSecure();
   const user = useAppSelector(selectCurrentUser) as TUser;
   const { data } = useMyCart();
   const cartProducts = data?.products as TCartProduct[];
-  const [myAddresses, setMyAddresses] = useState<TAddress[]>([]);
-  const [refetch, setRefetch] = useState(false);
-  useEffect(() => {
-    const getAddresses = async () => {
-      try {
-        const response = await axios.get("/address/get-my-addresses");
-        setMyAddresses(response.data.data as TAddress[]);
-      } catch (error: any) {
-        console.log(error?.response?.data);
-      }
-    };
-    getAddresses();
-  }, [axios, refetch]);
+  const { data: myAddresses, refetch } = useMyAddress();
   // State to track selected payment option
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
 
@@ -56,13 +45,7 @@ const Checkout = () => {
   );
 
   // Payment handling logic
-  const handleStripePayment = () => {
-    console.log("Stripe payment initiated");
-  };
 
-  const handleCOD = () => {
-    console.log("COD selected");
-  };
   const [loading, setLoading] = useState<boolean>();
   // 2. Define a submit handler.
 
@@ -73,13 +56,35 @@ const Checkout = () => {
       toast.success(response?.data?.message);
       setIsAddNewAddressOpen(false);
       setIsSelectAddressOpen(true);
-      setRefetch(true);
+      refetch();
     } catch (error: any) {
       console.log(error?.response?.data);
     } finally {
       setLoading(false);
     }
   };
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
+  const handleCOD = async () => {
+    if (!selectedAddress?.fullName)
+      return toast.error("Please select an address");
+    setIsOrderLoading(true);
+    try {
+      for (let index = 0; index < cartProducts.length; index++) {
+        await axios.post("/order/add-new-order", {
+          address: selectedAddress._id,
+          quantity: cartProducts[index].quantity,
+          product: cartProducts[index].product._id,
+          amount: cartProducts[index].product.price,
+        });
+      }
+      toast.success("Order Confirmed SuccessFully");
+    } catch (error: any) {
+      console.log(error?.response);
+    } finally {
+      setIsOrderLoading(false);
+    }
+  };
+
   return (
     <Container className="max-w-6xl mx-auto px-4 py-8">
       {/* User Info */}
@@ -100,7 +105,7 @@ const Checkout = () => {
       </Card>
 
       {/* Cart Items in a Table */}
-      <section >
+      <section>
         <h3 className="text-2xl font-medium mb-4 font-bai text-gray-900">
           Your Cart
         </h3>
@@ -181,7 +186,7 @@ const Checkout = () => {
         <div className="flex gap-6 items-center justify-between lg:flex-row flex-col ">
           <div className="gap-4 flex">
             <Button
-            disabled
+              disabled
               variant={selectedPayment === "stripe" ? "default" : "outline"}
               onClick={() => setSelectedPayment("stripe")}
               className="px-6 py-3"
@@ -225,7 +230,7 @@ const Checkout = () => {
                     <DialogTitle className="font-bai">
                       Please Select A Delivery Address
                     </DialogTitle>
-                    <div className="space-y-4 mt-4">
+                    <div className="space-y-4 mt-4 max-h-[280px] overflow-y-auto">
                       {myAddresses?.map((address) => (
                         <Card
                           key={address._id}
@@ -293,17 +298,21 @@ const Checkout = () => {
       <div className="mt-8 flex justify-end">
         <Button
           variant="default"
-          onClick={() =>
-            selectedPayment === "stripe" ? handleStripePayment() : handleCOD()
-          }
-          disabled={!selectedPayment}
-          className="px-8 py-3 text-lg font-semibold font-bai"
+          onClick={handleCOD}
+          disabled={isOrderLoading}
+          className="px-8 py-3 text-lg font-semibold font-bai flex items-center justify-center"
         >
-          {selectedPayment === "stripe"
-            ? "Proceed with Stripe"
-            : selectedPayment === "cod"
-            ? "Place Order"
-            : "Select Payment Option"}
+          <span>
+            {" "}
+            {selectedPayment === "cod"
+              ? "Place Order"
+              : "Select Payment Option"}
+          </span>
+          <span>
+            {isOrderLoading && (
+              <Loader size={22} className="animate-spin pl-2" />
+            )}
+          </span>
         </Button>
       </div>
     </Container>
