@@ -309,7 +309,7 @@ const Checkout = () => {
           </span>
           <span>
             {isOrderLoading && (
-              <Loader size={22} className="animate-spin pl-2" />
+              <Loader size={22} className="animate-spin ml-2" />
             )}
           </span>
         </Button>
