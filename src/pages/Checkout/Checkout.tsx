@@ -128,7 +128,7 @@ const Checkout = () => {
                 <tr key={item._id} className="border-b">
                   <td className="px-6 py-4 flex items-center gap-4">
                     <img
-                      src={item.product.thumbnail}
+                      src={generateImage(item.product.thumbnail)}
                       alt={item.product.title}
                       className="w-16 h-16 object-cover rounded-lg border border-gray-300 shadow-sm"
                     />
@@ -230,7 +230,7 @@ const Checkout = () => {
                       Please Select A Delivery Address
                     </DialogTitle>
                     <div className="space-y-4 mt-4 max-h-[280px] overflow-y-auto">
-                      {myAddresses?.map((address:TAddress) => (
+                      {myAddresses?.map((address: TAddress) => (
                         <Card
                           key={address._id}
                           className={`p-4 border-2 ${

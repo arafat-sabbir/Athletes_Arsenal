@@ -7,6 +7,7 @@ import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import useFetchData from "@/hooks/FetchData";
 import { TProduct } from "@/types/user/product";
+import generateImage from "@/utils/generateImage";
 
 const ProductDetail = () => {
   useEffect(() => {
@@ -66,7 +67,7 @@ const ProductDetail = () => {
                   key={`index_${index}`}
                 >
                   <img
-                    src={img}
+                    src={generateImage(img)}
                     width="1200"
                     height="600"
                     alt={product?.title}
@@ -85,7 +86,7 @@ const ProductDetail = () => {
               return (
                 <img
                   key={index}
-                  src={img}
+                  src={generateImage(img)}
                   width={1200}
                   height={600}
                   className={`h-6 w-10 bg-black/20 sm:h-8 md:h-12 md:w-20 ${

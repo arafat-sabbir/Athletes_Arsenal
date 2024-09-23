@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import useMutateData from "@/hooks/MutateData";
 import { formatCurrency } from "@/utils/FormatCurrency";
+import generateImage from "@/utils/generateImage";
 import { Loader, Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -37,7 +38,7 @@ const CartItem = ({ item }: { item: any }) => {
       {/* Product Image */}
       <Link to={`/product/${product._id}`} className="w-24">
         <img
-          src={thumbnail}
+          src={generateImage(thumbnail)}
           alt={title}
           className="rounded-lg w-full h-auto object-cover"
         />

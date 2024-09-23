@@ -29,6 +29,14 @@ export const CheckoutFormValidation = z.object({
 });
 
 export const AddProductValidation = z.object({
-  email: z.string().email(),
-  photo: z.any(),
+  title: z.string({ required_error: "Title is required" }),
+  description: z.string({ required_error: "Description is required" }),
+  price: z
+    .string({ required_error: "Price is required" })
+    .refine((val) => !isNaN(Number(val)), { message: "Price must be a number" }),
+  category: z.string({ required_error: "Category is required" }),
+  stockCount: z
+    .string({ required_error: "Stock Count is required" })
+    .refine((val) => !isNaN(Number(val)), { message: "Stock Count must be a number" }),
+  vendor: z.string({ required_error: "Vendor is required" }),
 });

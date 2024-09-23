@@ -7,7 +7,7 @@ import { TProduct } from "@/types/user/product";
 
 const NewArrival = () => {
   const { data } = useProducts();
-  const products = data?.products.slice(0, 8);
+  const products = data?.products.slice(0, 4);
   return (
     <Container className="pb-20">
       <div className="space-y-2">
