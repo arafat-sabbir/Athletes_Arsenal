@@ -17,8 +17,7 @@ const ProductDetail = () => {
     });
   }, []);
   const { id } = useParams();
-  const { data } = useFetchData(`/product/get-product/${id}`);
-  console.log(data);
+  const { data,isLoading } = useFetchData(`/product/get-product/${id}`);
   const product: TProduct = data;
 
   // Quantity State To Add Product To Cart
@@ -52,6 +51,10 @@ const ProductDetail = () => {
     },
     ["cart,product"]
   );
+
+  if(isLoading){
+    return <h1>Loading <Loader className="ml-2 animate-spin"/></h1>
+  }
   return (
     <Container className="py-10">
       <div className="flex justify-center gap-10 lg:flex-row flex-col">
