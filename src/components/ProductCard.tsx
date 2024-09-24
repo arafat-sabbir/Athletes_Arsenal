@@ -24,7 +24,7 @@ const ProductCard = ({ item }: { item: TProduct }) => {
           <p className="text-primary font-semibold text-lg">${price}</p>
         </div>
         <Link to={`/product/${item._id}`} state={item} className="w-full mt-4">
-          <Button className="w-full bg-primary text-white hover:bg-primary-dark transition-colors duration-300">
+          <Button className="w-full bg-primary text-white  transition-colors duration-300">
             View Details
           </Button>
         </Link>

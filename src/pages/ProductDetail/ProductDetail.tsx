@@ -17,7 +17,8 @@ const ProductDetail = () => {
     });
   }, []);
   const { id } = useParams();
-  const { data } = useFetchData(`/product/${id}`);
+  const { data } = useFetchData(`/product/get-product/${id}`);
+  console.log(data);
   const product: TProduct = data;
 
   // Quantity State To Add Product To Cart
