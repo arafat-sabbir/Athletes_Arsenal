@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { AddProductValidation } from "@/lib/validation";
 import Container from "@/layout/Container/Container";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomFormField from "@/components/CustomFormField";
 import { Button } from "@/components/ui/button";
 import { FormFieldType } from "@/components/form/LoginForm";
@@ -27,12 +25,22 @@ export type TProduct = {
   productImages: string[];
 };
 
+// Define FormValues with specific types
+interface FormValues {
+  title: string;
+  description: string;
+  price: number | string; // Price can be a number or string (for form submission)
+  category: string;
+  stockCount: number | string; // Stock count can be a number or string (for form submission)
+  vendor: string;
+}
+
 const AddProduct = ({ className }: { className?: string }) => {
-  const [thumbnail, setThumbnail] = useState<File | null>(null); // Thumbnail image
-  const [productImages, setProductImages] = useState<File[]>([]); // Product images
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [productImages, setProductImages] = useState<File[]>([]);
   const axios = useAxiosSecure();
   const navigate = useNavigate();
-  const form = useForm<z.infer<typeof AddProductValidation>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(AddProductValidation),
     defaultValues: {
       title: "",
@@ -44,7 +52,6 @@ const AddProduct = ({ className }: { className?: string }) => {
     },
   });
 
-  // Dropzone for Thumbnail
   const {
     getRootProps: getThumbnailRootProps,
     getInputProps: getThumbnailInputProps,
@@ -54,11 +61,10 @@ const AddProduct = ({ className }: { className?: string }) => {
     multiple: false,
   });
 
-  // Dropzone for Product Images
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "image/*": [] },
     onDrop: (acceptedFiles) =>
-      setProductImages([...productImages, ...acceptedFiles]),
+      setProductImages((prev) => [...prev, ...acceptedFiles]),
     multiple: true,
   });
 
@@ -72,10 +78,9 @@ const AddProduct = ({ className }: { className?: string }) => {
     : "/assets/product/upload.png";
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit = async (values: z.infer<typeof AddProductValidation>) => {
+  const onSubmit = async (values: FormValues) => {
     setLoading(true);
 
-    // Check if thumbnail and productImages are set
     if (!thumbnail) {
       toast.error("Please select a thumbnail image");
       setLoading(false);
@@ -89,13 +94,16 @@ const AddProduct = ({ className }: { className?: string }) => {
     }
 
     const formData = new FormData();
-    for (const key in values) {
-      if (values[key] !== undefined) {
-        formData.append(key, values[key]);
+    (Object.keys(values) as Array<keyof typeof values>).forEach((key) => {
+      const value = values[key];
+      if (value !== undefined) {
+        // Append the value to FormData, handle cases for different types
+        if (typeof value === "string" || typeof value === "number") {
+          formData.append(key, String(value)); // Convert numbers to strings
+        }
       }
-    }
+    });
 
-    // Append the thumbnail and product images to formData
     formData.append("image", thumbnail);
     productImages.forEach((image) => {
       formData.append("images", image);
@@ -115,8 +123,6 @@ const AddProduct = ({ className }: { className?: string }) => {
       setLoading(false);
     }
   };
-
-  // Log form errors for debugging
 
   return (
     <Container className="flex justify-center items-center h-[900px] p-4 relative my-32">

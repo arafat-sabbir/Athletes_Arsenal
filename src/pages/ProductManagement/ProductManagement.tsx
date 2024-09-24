@@ -37,7 +37,7 @@ const ProductManagement = () => {
       const result = await axios.delete(`/product/delete-product/${id}`);
       refetch();
       toast.success(result?.data?.message);
-    } catch (error) {
+    } catch (error:any) {
       console.log(error?.response?.data);
     } finally {
       setLoading(false);
